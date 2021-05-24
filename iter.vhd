@@ -15,6 +15,7 @@ entity iter is
 end iter;
 
 architecture dentro of iter is
+begin
     variable cnt : integer :=0 ;
     process(inc, rst)
     begin
@@ -29,9 +30,4 @@ architecture dentro of iter is
             ite <= '1';
         end if;
     end process;
-    
-begin
-    
-    
-    
 end architecture dentro;

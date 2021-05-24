@@ -18,6 +18,7 @@ end entity multiplex2;
 architecture dentro of multiplex2 is    
 begin
     process(input1, input2, sel)
+    begin
         case sel is
             when '0' => output1 <= input1;
             when '1' => output1 <= input2;
