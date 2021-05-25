@@ -11,7 +11,7 @@ entity multiplex2 is
         input1:     in bit_vector(2 downto 0);
         input2:     in bit_vector(2 downto 0);
         sel:        in bit;
-        output1:    in bit_vector(2 downto 0)
+        output1:    out bit_vector(2 downto 0)
     );
 end entity multiplex2;
 
@@ -23,7 +23,7 @@ begin
             when '0' => output1 <= input1;
             when '1' => output1 <= input2;
         end case;
-    end process
+    end process;
     
     
 end architecture dentro;

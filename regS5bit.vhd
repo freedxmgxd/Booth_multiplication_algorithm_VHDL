@@ -14,7 +14,7 @@ port(
    load:       in bit;
    reset:      in bit;
    clock:		in bit;
-	RegOut:		out bit_vector (4 downto 0)
+	RegOut:		buffer bit_vector (4 downto 0)
 );
 end shift_reg;
 
@@ -23,7 +23,7 @@ end shift_reg;
 architecture behv of shift_reg is
    
     signal S: bit_vector(4 downto 0):="00000";
-
+    
 begin
     
     process(clock, reset)
@@ -31,7 +31,7 @@ begin
 
    if reset = '1' then 
       S <= "00000";
-   end if
+   end if;
 	-- everything happens upon the clock changing
 	if clock'event and clock='1' then
 	    if shift = '1' then

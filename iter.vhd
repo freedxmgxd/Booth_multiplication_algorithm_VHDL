@@ -10,18 +10,18 @@ entity iter is
     port(
         inc:    in bit;
         rst:    in bit;
-        ite:    out bit;
+        ite:    out bit
     );
 end iter;
 
 architecture dentro of iter is
 begin
-    variable cnt : integer :=0 ;
     process(inc, rst)
+    variable cnt : integer :=0 ;
     begin
-        if rst '1' then
-            cnt :=0;
-            ite <= 0;
+        if rst = '1' then
+            cnt := 0;
+            ite <= '0';
         end if;
         if (inc='1' and inc'last_value='0') then
           cnt:=cnt+1;
