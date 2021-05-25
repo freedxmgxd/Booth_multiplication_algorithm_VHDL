@@ -23,7 +23,7 @@ begin
             cnt :=0;
             ite <= 0;
         end if;
-        if inc = '1' then
+        if (inc='1' and inc'last_value='0') then
           cnt:=cnt+1;
         end if;
         if cnt > 4 then

@@ -7,8 +7,8 @@ use ieee.std_logic_arith.all;
 
 entity ALU is
 
-port(	A:	in std_logic_vector(1 downto 0);
-	B:	in std_logic_vector(1 downto 0);
+port(	A:	in std_logic_vector(4 downto 0);
+	B:	in std_logic_vector(4 downto 0);
 	Sel:	in std_logic_vector(1 downto 0);
 	Res:	out std_logic_vector(1 downto 0)  
 );
