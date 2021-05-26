@@ -8,13 +8,13 @@ use ieee.std_logic_1164.all;
 
 entity shift_reg is
 port(	
-   RegIn:		in bit_vector (4 downto 0);
-   inputS:     in bit;
-	shift:		in bit;
-   load:       in bit;
-   reset:      in bit;
-   clock:		in bit;
-	RegOut:		buffer bit_vector (4 downto 0)
+   RegIn:		in std_logic_vector (4 downto 0);
+   inputS:     in std_logic;
+	shift:		in std_logic;
+   load:       in std_logic;
+   reset:      in std_logic;
+   clock:		in std_logic;
+	RegOut:		buffer std_logic_vector (4 downto 0)
 );
 end shift_reg;
 
@@ -22,7 +22,7 @@ end shift_reg;
 
 architecture behv of shift_reg is
    
-    signal S: bit_vector(4 downto 0):="00000";
+    signal S: std_logic_vector(4 downto 0):="00000";
     
 begin
     

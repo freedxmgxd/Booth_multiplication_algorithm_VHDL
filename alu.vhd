@@ -1,3 +1,5 @@
+--ALU de soma e subtração
+---------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
@@ -29,8 +31,8 @@ begin
 	    when "00" =>
 		Res <= A + B;
 	    when "01" =>						
-	        Res <= A + (not B) + 1;
-            when "10" =>
+	    Res <= A + (not B) + 1;
+        when "10" =>
 		Res <= A and B;
 	    when "11" =>	 
 		Res <= A or B;
