@@ -343,6 +343,7 @@ architecture behav of main is
     signal SoS : std_logic_vector(1 downto 0) := "00";
     signal sosFSM : std_logic := '0';
     signal iterOut : std_logic := '0';
+    signal POut : std_logic_vector(7 downto 0) := "00000000";
     
     
 begin
@@ -414,8 +415,11 @@ begin
             resetFSMOUT,
             iterOut
         );
+
+    POut(3 downto 0) <= RegOutC(4 downto 1);
+    POut(7 downto 4) <= RegOutB(3 downto 0); 
+    
 end architecture;
 
 ----------------------------------------------------
 ----------------------------------------------------
---
