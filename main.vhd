@@ -419,6 +419,7 @@ begin
 
     POut(3 downto 0) <= RegOutC(4 downto 1);
     POut(7 downto 4) <= RegOutB(3 downto 0); 
+    P <= POut;
     
 end architecture;
 
