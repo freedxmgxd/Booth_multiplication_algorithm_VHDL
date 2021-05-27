@@ -181,6 +181,8 @@ begin
                 state := 5;
             elsif (state = 5) then 
                 state := 2;
+            else 
+                state := 0;
             end if;
         end if;
         case state is
@@ -343,8 +345,14 @@ architecture behav of main is
     
 begin
     extA(0) <= A(0);
-    extA(4 downto 1) <= A;
-    extB(3 downto 0) <= B;
+    extA(1) <= A(0);
+    extA(2) <= A(1);
+    extA(3) <= A(2);
+    extA(4) <= A(3);
+    extB(0) <= B(0);
+    extB(1) <= B(1);
+    extB(2) <= B(2);
+    extB(3) <= B(3);
     extB(4) <= '0';
     resetRegC <= reset or resetFSMOUT;
 
@@ -411,8 +419,14 @@ begin
             iterOut
         );
 
-    POut(3 downto 0) <= RegOutC(4 downto 1);
-    POut(7 downto 4) <= RegOutB(3 downto 0); 
+    POut(0) <= RegOutC(1);
+    POut(1) <= RegOutC(2);
+    POut(2) <= RegOutC(3);
+    POut(3) <= RegOutC(4);
+    POut(4) <= RegOutB(0);
+    POut(5) <= RegOutB(1);
+    POut(6) <= RegOutB(2);
+    POut(7) <= RegOutB(3);
     P <= POut;
 
 end architecture;
