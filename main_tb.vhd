@@ -48,8 +48,8 @@ architecture testbench of tb is
     begin
     wait for 5 ns;
     
-    sA <= "0000";
-    sB <= "0111";
+    sA <= "0001";
+    sB <= "0010";
     Stt<= '1';
     Rst<= '0';
     
@@ -117,10 +117,12 @@ architecture testbench of tb is
     wait for 5 ns;
     
     report "Clk: " & std_logic'image(Clk);
+    wait for 100 ns;
     
-    report "resultado: " & integer'image(to_integer(unsigned(Outp)));
+    report "resultado: " & to_string(Outp);
     
     wait;
     
 end process;
 end testbench;
+
