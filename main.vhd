@@ -8,13 +8,13 @@ use ieee.std_logic_1164.all;
 
 entity shift_reg is
 port(	
-    RegIn:		in bit_vector (4 downto 0);
-    inputS:     in bit;
-    shift:		in bit;
-    load:       in bit;
-    reset:      in bit;
-    clck:		in bit;
-    RegOut:		buffer bit_vector (4 downto 0)
+    RegIn:		in std_logic_vector (4 downto 0);
+    inputS:     in std_logic;
+    shift:		in std_logic;
+    load:       in std_logic;
+    reset:      in std_logic;
+    clck:		in std_logic;
+    RegOut:		buffer std_logic_vector (4 downto 0)
 );
 end shift_reg;
 
@@ -22,7 +22,7 @@ end shift_reg;
 
 architecture behv of shift_reg is
    
-    signal S: bit_vector(4 downto 0):="00000";
+    signal S: std_logic_vector(4 downto 0):="00000";
     
 begin
     
@@ -111,10 +111,10 @@ use ieee.std_logic_1164.all;
 
 entity multiplex2 is
     port (
-        input1:     in bit_vector(1 downto 0);
-        input2:     in bit_vector(1 downto 0);
-        sel:        in bit;
-        output1:    out bit_vector(1 downto 0)
+        input1:     in std_logic_vector(1 downto 0);
+        input2:     in std_logic_vector(1 downto 0);
+        sel:        in std_logic;
+        output1:    out std_logic_vector(1 downto 0)
     );
 end entity multiplex2;
 
@@ -125,6 +125,7 @@ begin
         case sel is
             when '0' => output1 <= input1;
             when '1' => output1 <= input2;
+            when others => output1 <=input1;
         end case;
     end process;
     
