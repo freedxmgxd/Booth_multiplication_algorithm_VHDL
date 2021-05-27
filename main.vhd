@@ -33,7 +33,7 @@ begin
       S <= "00000";
    end if;
 	-- everything happens upon the clock changing
-	if clckSR'last_value='1' and clckSR='0' then
+	if (clckSR'last_value='1' and clckSR='0') then
 	    if shift = '1' then
 		    S(0) <= inputS;
             S(1) <= RegOut(0);
@@ -64,7 +64,8 @@ use ieee.std_logic_arith.all;
 
 entity ALU is
 
-port(	A:	in std_logic_vector(4 downto 0);
+port(	
+    A:	    in std_logic_vector(4 downto 0);
 	B:	    in std_logic_vector(4 downto 0);
 	Sel:	in std_logic_vector(1 downto 0);
 	Res:	out std_logic_vector(4 downto 0)  
@@ -87,8 +88,8 @@ begin
 	    when "00" =>
 		Res <= A + B;
 	    when "01" =>						
-	        Res <= A + (not B) + 1;
-            when "10" =>
+	    Res <= A + (not B) + 1;
+        when "10" =>
 		Res <= A and B;
 	    when "11" =>	 
 		Res <= A or B;
@@ -158,34 +159,27 @@ begin
     variable state : integer := 0;
     begin
         if (clk = '1' and clk'last_value='0') then
-            if (state = 0 and S ='0') then 
+            if (Reset = '1') then
                 state := 0;
-            end if;
-            if (state = 0 and S ='1') then 
+            elsif (state = 0 and S ='0') then 
+                state := 0;
+            elsif (state = 0 and S ='1') then 
                 state := 1;
-            end if;
-            if (state = 1) then 
+            elsif (state = 1) then 
                 state := 2;
-            end if;
-            if (state = 2 and I ='1') then 
+            elsif (state = 2 and I ='1') then 
                 state := 0;
-            end if;
-            if (state = 2 and I = '0' and V ="01") then 
+            elsif (state = 2 and I = '0' and V ="01") then 
                 state := 4;
-            end if;
-            if (state = 2 and I = '0' and V ="10") then 
+            elsif (state = 2 and I = '0' and V ="10") then 
                 state := 3;
-            end if;
-            if (state = 2 and I = '0' and (V ="00" or V = "11")) then 
+            elsif (state = 2 and I = '0' and (V ="00" or V = "11")) then 
                 state := 5;
-            end if;
-            if (state = 3) then 
+            elsif (state = 3) then 
                 state := 5;
-            end if;
-            if (state = 4) then 
+            elsif (state = 4) then 
                 state := 5;
-            end if;
-            if (state = 5) then 
+            elsif (state = 5) then 
                 state := 2;
             end if;
         end if;
@@ -420,7 +414,7 @@ begin
     POut(3 downto 0) <= RegOutC(4 downto 1);
     POut(7 downto 4) <= RegOutB(3 downto 0); 
     P <= POut;
-    
+
 end architecture;
 
 ----------------------------------------------------

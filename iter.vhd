@@ -1,4 +1,4 @@
--- Iterador que conta atÃ© 4
+-- Iterador que conta até 4
 ---------------------------------------------------
 
 library ieee ;
@@ -8,9 +8,9 @@ use ieee.std_logic_1164.all;
 
 entity iter is 
     port(
-        inc:    in bit;
-        rst:    in bit;
-        ite:    out bit
+        inc:    in std_logic;
+        rst:    in std_logic;
+        ite:    out std_logic
     );
 end iter;
 

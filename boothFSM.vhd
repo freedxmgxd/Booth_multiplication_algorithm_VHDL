@@ -24,34 +24,27 @@ begin
     variable state : integer := 0;
     begin
         if (clk = '1' and clk'last_value='0') then
-            if (state = 0 and S ='0') then 
+            if (Reset = '1') then
                 state := 0;
-            end if;
-            if (state = 0 and S ='1') then 
+            elsif (state = 0 and S ='0') then 
+                state := 0;
+            elsif (state = 0 and S ='1') then 
                 state := 1;
-            end if;
-            if (state = 1) then 
+            elsif (state = 1) then 
                 state := 2;
-            end if;
-            if (state = 2 and I ='1') then 
+            elsif (state = 2 and I ='1') then 
                 state := 0;
-            end if;
-            if (state = 2 and I = '0' and V ="01") then 
+            elsif (state = 2 and I = '0' and V ="01") then 
                 state := 4;
-            end if;
-            if (state = 2 and I = '0' and V ="10") then 
+            elsif (state = 2 and I = '0' and V ="10") then 
                 state := 3;
-            end if;
-            if (state = 2 and I = '0' and (V ="00" or V = "11")) then 
+            elsif (state = 2 and I = '0' and (V ="00" or V = "11")) then 
                 state := 5;
-            end if;
-            if (state = 3) then 
+            elsif (state = 3) then 
                 state := 5;
-            end if;
-            if (state = 4) then 
+            elsif (state = 4) then 
                 state := 5;
-            end if;
-            if (state = 5) then 
+            elsif (state = 5) then 
                 state := 2;
             end if;
         end if;
@@ -95,3 +88,4 @@ begin
         end case;
     end process;
 end architecture;
+---------------------------------------------------
