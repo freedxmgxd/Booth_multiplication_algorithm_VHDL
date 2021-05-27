@@ -33,13 +33,13 @@ begin
       S <= "00000";
    elsif(clckSR='0' and clckSR'event) then
 	    if shift = '1' then
-		    S(0) <= inputS;
-            S(1) <= RegOut(0);
-            S(2) <= RegOut(1);   
-            S(3) <= RegOut(2);
-            S(4) <= RegOut(3);
+		    S(0) <= RegOut(1);
+            S(1) <= RegOut(2);
+            S(2) <= RegOut(3);   
+            S(3) <= RegOut(4);
+            S(4) <= inputS;
 	    elsif load = '1' then
-		   S <= RegIn;
+		    S <= RegIn;
 	    end if;
 	end if;
 
@@ -342,15 +342,15 @@ architecture behav of main is
     
 begin
     extA(0) <= A(0);
-    extA(1) <= A(0);
-    extA(2) <= A(1);
-    extA(3) <= A(2);
+    extA(1) <= A(1);
+    extA(2) <= A(2);
+    extA(3) <= A(3);
     extA(4) <= A(3);
-    extB(0) <= B(0);
-    extB(1) <= B(1);
-    extB(2) <= B(2);
-    extB(3) <= B(3);
-    extB(4) <= '0';
+    extB(0) <= '0';
+    extB(1) <= B(0);
+    extB(2) <= B(1);
+    extB(3) <= B(2);
+    extB(4) <= B(3);
     resetRegC <= reset or resetFSMOUT;
 
     RegA: shift_reg
@@ -416,14 +416,14 @@ begin
             iterOut
         );
 
-    POut(0) <= RegOutC(1);
-    POut(1) <= RegOutC(2);
-    POut(2) <= RegOutC(3);
-    POut(3) <= RegOutC(4);
-    POut(4) <= RegOutB(0);
-    POut(5) <= RegOutB(1);
-    POut(6) <= RegOutB(2);
-    POut(7) <= RegOutB(3);
+    POut(0) <= RegOutB(1);
+    POut(1) <= RegOutB(2);
+    POut(2) <= RegOutB(3);
+    POut(3) <= RegOutB(4);
+    POut(4) <= RegOutC(0);
+    POut(5) <= RegOutC(1);
+    POut(6) <= RegOutC(2);
+    POut(7) <= RegOutC(3);
     P <= POut;
 
 end architecture;

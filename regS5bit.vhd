@@ -33,13 +33,13 @@ begin
       S <= "00000";
    elsif(clckSR='0' and clckSR'event) then
 	    if shift = '1' then
-		    S(0) <= inputS;
-            S(1) <= RegOut(0);
-            S(2) <= RegOut(1);   
-            S(3) <= RegOut(2);
-            S(4) <= RegOut(3);
+		    S(0) <= RegOut(1);
+            S(1) <= RegOut(2);
+            S(2) <= RegOut(3);   
+            S(3) <= RegOut(4);
+            S(4) <= inputS;
 	    elsif load = '1' then
-		   S <= RegIn;
+		    S <= RegIn;
 	    end if;
 	end if;
 
