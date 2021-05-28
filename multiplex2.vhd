@@ -11,7 +11,7 @@ entity multiplex2 is
         input1:     in std_logic_vector(1 downto 0);
         input2:     in std_logic_vector(1 downto 0);
         sel:        in std_logic;
-        output1:    out std_logic_vector(1 downto 0)
+        output1:    buffer std_logic_vector(1 downto 0)
     );
 end entity multiplex2;
 
@@ -22,10 +22,10 @@ begin
         case sel is
             when '0' => output1 <= input1;
             when '1' => output1 <= input2;
-            when others => output1 <=input1;
+            when others => output1 <= output1;
         end case;
     end process;
     
     
 end architecture dentro;
----------------------------------------------------
+----------------------------------------------------

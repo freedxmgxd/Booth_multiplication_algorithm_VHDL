@@ -1,4 +1,4 @@
---ALU de soma e subtraÃ§Ã£o
+--ALU de soma e subtração
 ---------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
@@ -8,7 +8,8 @@ use ieee.std_logic_arith.all;
 
 entity ALU is
 
-port(	A:	in std_logic_vector(4 downto 0);
+port(	
+    A:	    in std_logic_vector(4 downto 0);
 	B:	    in std_logic_vector(4 downto 0);
 	Sel:	in std_logic_vector(1 downto 0);
 	Res:	out std_logic_vector(4 downto 0)  
@@ -31,7 +32,7 @@ begin
 	    when "00" =>
 		Res <= A + B;
 	    when "01" =>						
-	    Res <= A + (not B) + 1;
+	    Res <= A - B;
         when "10" =>
 		Res <= A and B;
 	    when "11" =>	 

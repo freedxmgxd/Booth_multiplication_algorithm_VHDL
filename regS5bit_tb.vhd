@@ -57,7 +57,7 @@ begin
     begin								
 	
 	T_I <= "10001";
-    T_inputS <= '1';
+    T_inputS <= '0';
 	T_load <= '0';
 	T_reset <= '0';
 		
@@ -105,6 +105,7 @@ begin
 	wait for 10 ns;
 	T_load <= '1';
 	wait for 10 ns;
+    T_load <= '0';
     report "Case 5: " & to_string(T_Q);
 	assert (T_Q="10001") report "Test5 Failed!" severity error;
 	if (T_Q/=T_I) then
@@ -115,11 +116,53 @@ begin
 	wait for 10 ns;
 	T_shift <= '1';
 	wait for 10 ns;
+    T_shift <= '0';
     report "Case 6: " & to_string(T_Q);
-	assert (T_Q="11000") report "Test6 Failed!" severity error;
+	assert (T_Q="01000") report "Test6 Failed!" severity error;
 	if (T_Q/=T_I) then
 	    err_cnt := err_cnt+1;
 	end if;
+    -- case 7
+	wait for 10 ns;
+	T_shift <= '1';
+	wait for 10 ns;
+    T_shift <= '0';
+    report "Case 7: " & to_string(T_Q);
+	assert (T_Q="00100") report "Test7 Failed!" severity error;
+	if (T_Q/=T_I) then
+	    err_cnt := err_cnt+1;
+	end if;
+    -- case 8
+	wait for 10 ns;
+	T_shift <= '1';
+	wait for 10 ns;
+    T_shift <= '0';
+    report "Case 8: " & to_string(T_Q);
+	assert (T_Q="00010") report "Test8 Failed!" severity error;
+	if (T_Q/=T_I) then
+	    err_cnt := err_cnt+1;
+	end if;
+    -- case 9
+	wait for 10 ns;
+	T_shift <= '1';
+	wait for 10 ns;
+    T_shift <= '0';
+    report "Case 9: " & to_string(T_Q);
+	assert (T_Q="00001") report "Test9 Failed!" severity error;
+	if (T_Q/=T_I) then
+	    err_cnt := err_cnt+1;
+	end if;
+    -- case 10
+	wait for 10 ns;
+	T_shift <= '1';
+	wait for 10 ns;
+    T_shift <= '0';
+    report "Case 10: " & to_string(T_Q);
+	assert (T_Q="00000") report "Test10 Failed!" severity error;
+	if (T_Q/=T_I) then
+	    err_cnt := err_cnt+1;
+	end if;
+   
 		
 	-- summary of all the tests
 	if (err_cnt=0) then	

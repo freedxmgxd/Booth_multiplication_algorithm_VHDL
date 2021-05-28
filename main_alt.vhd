@@ -51,7 +51,7 @@ begin
 end architecture behv;
 
 ----------------------------------------------------
---ALU de soma e subtraÃ§Ã£o
+--ALU de soma e subtração
 ---------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
@@ -85,7 +85,7 @@ begin
 	    when "00" =>
 		Res <= A + B;
 	    when "01" =>						
-	    Res <= A - B;
+	    Res <= A + (not B) + 1;
         when "10" =>
 		Res <= A and B;
 	    when "11" =>	 
@@ -112,7 +112,7 @@ entity multiplex2 is
         input1:     in std_logic_vector(1 downto 0);
         input2:     in std_logic_vector(1 downto 0);
         sel:        in std_logic;
-        output1:    buffer std_logic_vector(1 downto 0)
+        output1:    out std_logic_vector(1 downto 0)
     );
 end entity multiplex2;
 
@@ -123,7 +123,7 @@ begin
         case sel is
             when '0' => output1 <= input1;
             when '1' => output1 <= input2;
-            when others => output1 <= output1;
+            when others => output1 <=input1;
         end case;
     end process;
     
@@ -158,76 +158,72 @@ begin
         if (clk = '1' and clk'event) then
             if (Reset = '1') then
                 state := 0;
-                ResetOut <= '0';
-                AorS <= '0';
-                Somar <= '0';
-                Shift <= '0';
             elsif (state = 0 and S ='0') then 
                 state := 0;
+            elsif (state = 0 and S ='1') then 
+                state := 1;
+            elsif (state = 1) then 
+                state := 2;
+            elsif (state = 2 and I ='1') then 
+                state := 0;
+            elsif (state = 2 and I = '0' and V ="01") then 
+                state := 4;
+            elsif (state = 2 and I = '0' and V ="10") then 
+                state := 3;
+            elsif (state = 2 and I = '0' and (V ="00" or V = "11")) then 
+                state := 5;
+            elsif (state = 3) then 
+                state := 5;
+            elsif (state = 4) then 
+                state := 5;
+            elsif (state = 5) then 
+                state := 2;
+            else 
+                state := 0;
+            end if;
+        end if;
+        case state is
+            when 0 => 
                 ResetOut <= '0';
                 AorS <= '0';
                 Somar <= '0';
                 Shift <= '0';
-            elsif (state = 0 and S ='1') then 
-                state := 1;
+            when 1 => 
                 ResetOut <= '1';
                 AorS <= '0';
                 Somar <= '0';
                 Shift <= '0';
-            elsif (state = 1) then 
-                state := 2;
+            when 2 => 
                 ResetOut <= '0';
                 AorS <= '0';
                 Somar <= '0';
                 Shift <= '0';
-            elsif (state = 2 and I ='1') then 
-                state := 0;
+            when 3 => 
                 ResetOut <= '0';
                 AorS <= '0';
-                Somar <= '0';
+                Somar <= '1';
                 Shift <= '0';
-            elsif (state = 2 and I = '0' and V(1)='1' and v(0)='0') then 
-                state := 4;
+            when 4 => 
                 ResetOut <= '0';
                 AorS <= '1';
                 Somar <= '1';
                 Shift <= '0';
-            elsif (state = 2 and I = '0' and V(1)='0' and v(0)='1') then 
-                state := 3;
-                ResetOut <= '0';
-                AorS <= '0';
-                Somar <= '1';
-                Shift <= '0';
-            elsif (state = 2 and I = '0' and (V ="00" or V = "11")) then 
-                state := 5;
+            when 5 => 
                 ResetOut <= '0';
                 AorS <= '0';
                 Somar <= '0';
                 Shift <= '1';
-            elsif (state = 3) then 
-                state := 5;
+            when others =>
                 ResetOut <= '0';
-                AorS <= '0';
-                Somar <= '0';
-                Shift <= '1';
-            elsif (state = 4) then
-                state := 5;
-                ResetOut <= '0';
-                AorS <= '0';
-                Somar <= '0';
-                Shift <= '1';
-            elsif (state = 5) then 
-                state := 2;
-				ResetOut <= '0';
                 AorS <= '0';
                 Somar <= '0';
                 Shift <= '0';
-            end if;
-        end if;
+
+        end case;
     end process;
 end architecture;
 ---------------------------------------------------
--- Iterador que conta atÃ© 4
+-- Iterador que conta até 4
 ---------------------------------------------------
 
 library ieee ;
@@ -274,7 +270,7 @@ entity main is
         Reset:  in std_logic;
         clck:   in std_logic;
         P:      out std_logic_vector(7 downto 0);
-        Pointer: buffer std_logic_vector(9 downto 0)
+        Pointer: buffer std_logic_vector(4 downto 0)
         
     );
 end entity;
@@ -339,12 +335,12 @@ architecture behav of main is
     signal resetRegC : std_logic;
     signal resetFSMOUT : std_logic;
     signal somarFSMOUT : std_logic;
-    signal SoS : std_logic_vector(1 downto 0) := "00";
-    signal sosFSM : std_logic := '0';
+    signal SoS : std_logic_vector(1 downto 0);
+    signal sosFSM : std_logic;
     signal iterOut : std_logic;
-    signal POut : std_logic_vector(9 downto 0);
+    signal POut : std_logic_vector(7 downto 0);
     signal ver : std_logic_vector(1 downto 0);
-     
+    
 begin
     extA(0) <= A(0);
     extA(1) <= A(1);
@@ -360,7 +356,7 @@ begin
     Ver(0) <= RegOutB(0); 
     Ver(1) <= RegOutB(1); 
 	
-    Pointer <= POut;
+    Pointer <= RegOutA;
     
     RegA: shift_reg
         port map (
@@ -394,8 +390,8 @@ begin
         );
     ALU0: ALU
         port map (
-            RegOutC,
             RegOutA,
+            RegOutB,
             SoS,
             extC
         );
@@ -425,8 +421,15 @@ begin
             iterOut
         );
 
-    Pout <= RegOutC& RegOUtB;
-    P <= POut(8 downto 1);
+    POut(0) <= RegOutB(1);
+    POut(1) <= RegOutB(2);
+    POut(2) <= RegOutB(3);
+    POut(3) <= RegOutB(4);
+    POut(4) <= RegOutC(0);
+    POut(5) <= RegOutC(1);
+    POut(6) <= RegOutC(2);
+    POut(7) <= RegOutC(3);
+    P <= POut;
 
 end architecture;
 
