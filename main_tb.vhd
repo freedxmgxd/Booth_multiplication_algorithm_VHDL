@@ -19,11 +19,8 @@ architecture testbench of tb is
     end component main;
     
 
-    
-    --declaração do tempo de clock
     constant PERIODO : time := 10 ns;
     
-    --entradas e saídas tratadas por sinais, na mesma ordem que no componente
     signal sA:   		std_logic_vector(3 downto 0);
     signal sB:   		std_logic_vector(3 downto 0);
     signal Stt:  		std_logic;
@@ -34,10 +31,8 @@ architecture testbench of tb is
     
     begin
     
-    --geração do clock
     Clk <= not Clk after PERIODO/2;
     
-    --assinalando as entradas e saídas aos sinais tratados
     dut: main port map( 	 A=> sA,
 							 B=> sB,
 							 Start=> Stt,
@@ -47,13 +42,42 @@ architecture testbench of tb is
                              Pointer=> Ponteira 
 							);
     
+
+
+    testbench1: process is
+        begin
+        Rst <= '1';
+        wait for 10 ns;
+        Rst <= '0';
+        wait for 5 ns;
     
-    inc: process is
+        sA <= "1010";
+        sB <= "0100";
+        Stt<= '1';
+        Rst<= '0';
+    
+        wait for 30 ns;
+    
+        Stt<= '0';
+    
+        wait for 150 ns;
+    
+        report "resultado: "     & to_string(Outp);
+    
+        report "ponteira: "     & to_string(Ponteira);
+    
+        wait;
+
+end process;
+
+    testbench2: process is
     
     variable cERR: 	integer := 0;
     variable aux: 	std_logic_vector(7 downto 0);
     
     begin
+    
+    wait for 400 ns;
     Rst <= '1';
     wait for 10 ns;
     Rst <= '0';
@@ -67,10 +91,11 @@ architecture testbench of tb is
             Rst <= '0';
             wait for 30 ns;
             Stt <= '0';
-            wait for 400 ns;
+            wait for 200 ns;
             
             aux := std_logic_vector(to_signed(j * i, 8));
             
+            assert (outp = aux) report "Error na operação " & to_string(sA) & " * " & to_string(sB);
             if (outp /= aux) then
             cERR := cERR + 1;
             end if;
@@ -79,11 +104,9 @@ architecture testbench of tb is
         end loop;      
     end loop;
     
-    report "resultado: " 		& to_string(Outp);
-
-    report "ponteira: " 		& to_string(Ponteira);
-    
-    report "Erros apontados: " 	& to_string(cERR);
-    
+    report "Todos os testes foram realizados! Numeros de casos errados: " & to_string(cERR); 
+    wait;
 end process;
+
 end testbench;
+
