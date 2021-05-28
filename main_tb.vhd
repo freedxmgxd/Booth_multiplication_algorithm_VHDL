@@ -18,6 +18,8 @@ architecture testbench of tb is
     );
     end component main;
     
+
+    
     --declaração do tempo de clock
     constant PERIODO : time := 10 ns;
     
@@ -47,26 +49,41 @@ architecture testbench of tb is
     
     
     inc: process is
+    
+    variable cERR: 	integer := 0;
+    variable aux: 	std_logic_vector(7 downto 0);
+    
     begin
     Rst <= '1';
     wait for 10 ns;
     Rst <= '0';
     wait for 5 ns;
     
-    sA <= "1000";
-    sB <= "0010";
-    Stt<= '1';
-    Rst<= '0';
+    for i in (-8) to 7 loop
+    	for j in (-8) to 7 loop
+        	sA <= std_logic_vector(to_signed(i, 4));
+            sB <= std_logic_vector(to_signed(j, 4));
+			Stt <= '1';
+            Rst <= '0';
+            wait for 30 ns;
+            Stt <= '0';
+            wait for 400 ns;
+            
+            aux := std_logic_vector(to_signed(j * i, 8));
+            
+            if (outp /= aux) then
+            cERR := cERR + 1;
+            end if;
+        
+        
+        end loop;      
+    end loop;
     
-    wait for 30 ns;
-    
-    Stt<= '0';
-   
-    wait for 400 ns;
-    
-    report "resultado: " 	& to_string(Outp);
+    report "resultado: " 		& to_string(Outp);
 
-    report "ponteira: " 	& to_string(Ponteira);
+    report "ponteira: " 		& to_string(Ponteira);
+    
+    report "Erros apontados: " 	& to_string(cERR);
     
 end process;
 end testbench;
