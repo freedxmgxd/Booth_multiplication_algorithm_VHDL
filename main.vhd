@@ -255,7 +255,7 @@ begin
         if (inc='1' and inc'last_value='0') then
           cnt:=cnt+1;
         end if;
-        if cnt > 4 then
+        if cnt > 3 then
             ite <= '1';
         end if;
     end process;
@@ -333,7 +333,7 @@ architecture behav of main is
     signal RegOutA: std_logic_vector (4 downto 0);
     signal extB : std_logic_vector(4 downto 0);
     signal RegOutB: std_logic_vector (4 downto 0);
-    signal extC : std_logic_vector(4 downto 0);
+    signal extC : std_logic_vector(4 downto 0):="00000";
     signal RegOutC: std_logic_vector (4 downto 0);
     signal shiftOutFSM : std_logic;
     signal resetRegC : std_logic;
