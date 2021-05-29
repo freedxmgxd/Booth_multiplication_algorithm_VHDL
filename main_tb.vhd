@@ -42,7 +42,7 @@ architecture testbench of tb is
                              Pointer=> Ponteira 
 							);
     
-
+-- Para funcionar corretamente é preciso colocar uma das testbench como comentario, pois caso as duas sejam executadas ao mesmo tempo, as entradas tão entrando em conflito.
 
     testbench1: process is
         begin
@@ -51,8 +51,8 @@ architecture testbench of tb is
         Rst <= '0';
         wait for 5 ns;
     
-        sA <= "1010";
-        sB <= "0100";
+        sA <= "1000";
+        sB <= "0010";
         Stt<= '1';
         Rst<= '0';
     
