@@ -273,9 +273,7 @@ entity main is
         Start:  in std_logic;
         Reset:  in std_logic;
         clck:   in std_logic;
-        P:      out std_logic_vector(7 downto 0);
-        Pointer: buffer std_logic_vector(9 downto 0)
-        
+        P:      out std_logic_vector(7 downto 0) 
     );
 end entity;
 
@@ -360,7 +358,6 @@ begin
     Ver(0) <= RegOutB(0); 
     Ver(1) <= RegOutB(1); 
 	
-    Pointer <= POut;
     
     RegA: shift_reg
         port map (
