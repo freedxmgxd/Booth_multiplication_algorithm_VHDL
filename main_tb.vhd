@@ -2,9 +2,9 @@ library ieee;
 use ieee.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity tb is end;
+entity main_tb is end;
 
-architecture testbench of tb is
+architecture testbench of main_tb is
 
 	component main
     	port (
@@ -65,7 +65,7 @@ architecture testbench of tb is
             
         assert (outP = "11110000") report "Erro no caso 1!" severity error;
 
-        report "resultado: "     & to_string(outp); 
+        -- report "resultado: "     & to_string(outp); 
         
         Rst <= '1';
         wait for 10 ns;
@@ -74,7 +74,7 @@ architecture testbench of tb is
 
 
         assert (outP = "00000000") report "Erro no caso 1!" severity error;
-        report "resultado: "     & to_string(outp); 
+        -- report "resultado: "     & to_string(outP); 
      
 
         --Case 2 : Irá verificar para todos os casos possiveis se a solução bate com o esperado.
@@ -92,11 +92,11 @@ architecture testbench of tb is
                 Rst <= '0';
                 wait for 30 ns;
                 Stt <= '0';
-                wait for 150 ns;
+                wait for 140 ns;
                 
                 aux := std_logic_vector(to_signed(j * i, 8));
                 
-                assert (outp = aux) report "Error na operação " & to_string(sA) & " * " & to_string(sB);
+                assert (outp = aux) report "Erro in operation "; -- & to_string(sA) & " * " & to_string(sB);
                 if (outp /= aux) then
                 cERR := cERR + 1;
                 end if;
@@ -105,7 +105,7 @@ architecture testbench of tb is
             end loop;      
         end loop;
         
-        report "Todos os testes foram realizados! Numeros de erros encontrados: " & to_string(cERR); 
+        report "Todos os testes foram realizados! Numeros de erros encontrados: "; -- & to_string(cERR); 
         wait;
     end process;
 

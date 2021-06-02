@@ -1,4 +1,4 @@
--- Iterador que conta até 4
+-- Iterador que conta ate 4
 ---------------------------------------------------
 
 library ieee ;
@@ -26,7 +26,7 @@ begin
         if (inc='1' and inc'last_value='0') then
           cnt:=cnt+1;
         end if;
-        if cnt > 4 then
+        if cnt > 3 then
             ite <= '1';
         end if;
     end process;

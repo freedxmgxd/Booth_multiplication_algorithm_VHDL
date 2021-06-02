@@ -1,4 +1,4 @@
---ALU de soma e subtração
+--ALU de soma e subtraÃ§Ã£o
 ---------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;

@@ -1,7 +1,8 @@
 {
     "options": {
         "ghdl_analysis": [
-            "--ieee=synopsys"
+            "--ieee=synopsys",
+            "--std=02"
         ]
     }
 }
